@@ -1,1 +1,0 @@
-INDEX VERSION 1.131+C:\Users\1821732\OneDrive\A2019\Structures de données\Workspace_STR\.metadata\.plugins\org.eclipse.jdt.core
