@@ -1,0 +1,55 @@
+/**
+ * Auteurs : Marwane. Salif et Soti
+ * Fichier : ConsulterTousAvatars.java
+ * Cours   : 420-3A6-MO (TP7, Affectation Joueurs, Avatars)
+ * Date    : 11 décembre 2019
+ */
+
+// Packages.
+
+import outilsjava.*;
+
+/**
+ * La classe ConsulterTousAvatars permet d'afficher tous les avatars.
+ */
+
+public class ConsulterTousAvatars implements OutilsConstantes {
+
+	/**
+	 * Le constructeur permet pour chaque noeud de l'arbre des avatars d'afficher les renseignements de ce noeud.
+	 * 
+	 * @param jeu
+	 *            L'objet du jeu.
+	 */
+
+	public ConsulterTousAvatars( Jeu jeu ) {
+
+		// Constantes du constructeur.
+
+		final String MESS_VIDE = "\nIl n'y a aucun avatar à afficher.";
+
+		final String TITRE = "\nListe de tous les avatars.";
+
+		// Code du constructeur.
+
+		/**
+		 * TODO (À COMPLÉTER). Voir page 10 de l'énoncé du TP7.
+		 */
+
+		if ( jeu.getArbreAvatars().isEmpty() ) {
+
+			System.out.println( MESS_VIDE );
+		} else {
+			System.out.println( TITRE );
+
+			for ( NoeudAvatar noeudAvatar : jeu.getArbreAvatars()) {
+				
+				noeudAvatar.afficherNoeudAvatar();
+				
+				OutilsLecture.lireEntree( QUEST_CONTINUER );
+			}
+			
+			System.out.println( "\nNombre d'avatars : " + jeu.getArbreAvatars().size() );
+		}
+	}
+}

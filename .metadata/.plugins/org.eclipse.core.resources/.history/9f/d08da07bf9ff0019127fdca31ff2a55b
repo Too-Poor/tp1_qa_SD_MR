@@ -1,0 +1,173 @@
+/**
+ * Auteurs : Salif et Soti
+ * Fichier : ListeOrdonneeMedecin.java
+ * Cours   : 420-3A6-MO (TP6, Vaccination grippe saisonnière)
+ * Date    : 27 novembre 2019
+ */
+
+// Packages.
+
+import java.util.*;
+
+import outilsjava.*;
+
+/**
+ * La classe ListeOrdonneeMedecin permet de gérer une liste chaînée ordonnée de médecins. Chaque élément de la liste
+ * chaînée est de type ElementMedecin. La liste est en ordre des numéros de médecins. Cette classe hérite de la classe
+ * ListeChaineeOrdonnee. Cette classe implémente l'interface OutilsConstantes.
+ */
+
+public class ListeOrdonneeMedecin<E> extends ListeChaineeOrdonnee<ElementMedecin> implements OutilsConstantes {
+
+	/**
+	 * Le constructeur ListeOrdonneeMedecin() permet de construire une liste chaînée ordonnée vide de ElementMedecin.
+	 */
+
+	public ListeOrdonneeMedecin() {
+		super();
+	}
+
+	/**
+	 * La méthode publique obtenirNbTotalPatients() permet de retourner le nombre total de patients de la liste
+	 * ordonnée des médecins.
+	 * 
+	 * @return Le nombre total de patients.
+	 */
+
+	public int obtenirNbTotalPatients() {
+		int nbTotalPatients = 0;
+		ElementMedecin elementMedecin;
+
+		if ( !super.estVide() ) {
+			ListIterator<ElementMedecin> iterateurTemp = super.listeIterateur();
+			
+			while ( iterateurTemp.hasNext() ) {
+				elementMedecin = iterateurTemp.next();
+				nbTotalPatients += elementMedecin.getFilePatients().taille();
+			}
+		}
+
+
+		return nbTotalPatients;
+	}
+
+	/**
+	 * La méthode public chercherPatientListeMedecin() permet de chercher un patient dans la liste des médecins. Elle
+	 * cherche dans la file d'attente de chaque élément de la liste des médecins.
+	 * 
+	 * @param patient
+	 *            Le patient à chercher.
+	 *            
+	 * @return true si le patient a été trouvé quelque part et false dans le cas contraire.
+	 */
+
+	//TODO Utiliser un break à la fin?
+	public boolean chercherPatientListeMedecin( Patient patient ) {
+		boolean trouve = false;
+		ElementMedecin elementMedecin;
+
+		if ( !super.estVide() ) {
+			ListIterator<ElementMedecin> iterateurTemp = super.listeIterateur();
+			
+			while ( iterateurTemp.hasNext() && !trouve ) {
+				elementMedecin = iterateurTemp.next();
+				
+				if ( elementMedecin.getFilePatients().estPresent( patient ) ) {
+					trouve = true;
+				}
+			}
+		}
+
+		return trouve;
+	}
+
+	/**
+	 * La méthode publique viderListeMedecins() permet pour chaque élément de la liste des médecins de retirer
+	 * (vacciner) tous les patients un par un et ensuite de supprimer l'élément. Ce traitement est effectué à la fin de
+	 * la journée.
+	 */
+
+	public void viderListeMedecins() {
+		
+		// Constantes de la méthode.
+
+		final String MESS_PEUT_QUITTER = "\nCe médecin n'a plus de patients à vacciner. "
+										 + "Ce médecin peut donc quitter la clinique.";
+
+		final String MESS_DOIT_VACCINER = "\nCe médecin doit vacciner tous ses patients avant de quitter la clinique.";
+
+		final String MESS_VACCINE = "\nCe patient a été vacciné.";
+
+		// Code de la méthode.
+		ElementMedecin elementMedecin;
+		Patient patient;
+		
+		if ( !super.estVide() ) {
+			ListIterator<ElementMedecin> iterateurTemp = super.listeIterateur();
+			
+			while ( iterateurTemp.hasNext() ) {
+				elementMedecin = iterateurTemp.next();
+				
+				if ( elementMedecin.getFilePatients().estVide() ) {
+					elementMedecin.afficherElementMedecin();
+					iterateurTemp.remove();
+					System.out.println( MESS_PEUT_QUITTER );
+					OutilsLecture.lireEntree(QUEST_CONTINUER);
+				}
+			}
+			
+			iterateurTemp = super.listeIterateur();
+			
+			while ( iterateurTemp.hasNext() ) {
+				elementMedecin = iterateurTemp.next();
+				
+				if ( !elementMedecin.getFilePatients().estVide() ) {
+					elementMedecin.afficherElementMedecin();
+					System.out.println( MESS_DOIT_VACCINER );
+					
+					while ( !elementMedecin.getFilePatients().estVide() ) {
+						patient = elementMedecin.getFilePatients().obtenirDebut();
+						patient.afficherPatient();
+						System.out.println( MESS_VACCINE );
+						OutilsLecture.lireEntree(QUEST_CONTINUER);
+					}
+					
+					elementMedecin.afficherElementMedecin();
+				}
+				
+				iterateurTemp.remove();
+				System.out.println( MESS_PEUT_QUITTER );
+				OutilsLecture.lireEntree(QUEST_CONTINUER);
+			}
+		}
+
+	}
+
+	/**
+	 * La méthode publique afficherListeMedecins() permet pour chaque élément de la liste, d'afficher les
+	 * renseignements de cet élément.
+	 */
+
+	public void afficherListeMedecins() {
+		
+		// Constantes de la méthode.
+
+		final String TITRE = "\nListe des médecins disponibles dans la clinique.";
+
+		final String MESS_FIN_LISTE = "\nFin de la liste des médecins.";
+
+		// Code du constructeur.
+		ElementMedecin elementMedecin;
+		
+		if (!super.estVide()) {
+			ListIterator<ElementMedecin> iterateurTemp = super.listeIterateur();
+			
+			System.out.println( TITRE );
+			
+			while ( iterateurTemp.hasNext() ) {
+				elementMedecin.afficherElementMedecin();
+			}
+		}
+
+	}
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="Permutation"/>
+<fullyQualifiedTypeName name="javax.swing.plaf.BorderUIResource.TitledBorderUIResource"/>
+<fullyQualifiedTypeName name="javax.security.auth.callback.ConfirmationCallback"/>
+<fullyQualifiedTypeName name="outilsjava.OutilsAffichage"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="sun.awt.shell.Win32ShellFolder2.SystemIcon"/>
+<fullyQualifiedTypeName name="Membre"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="outilsjava.OutilsFichier"/>
+<fullyQualifiedTypeName name="AjouterMembre"/>
+<fullyQualifiedTypeName name="ConsulterMembre"/>
+<fullyQualifiedTypeName name="ConsulterTousMembres"/>
+<fullyQualifiedTypeName name="ModifierMembre"/>
+<fullyQualifiedTypeName name="SupprimerMembre"/>
+<fullyQualifiedTypeName name="org.omg.PortableInterceptor.SYSTEM_EXCEPTION"/>
+<fullyQualifiedTypeName name="MembreFichier"/>
+<fullyQualifiedTypeName name="outilsjava.OutilsLecture"/>
+</qualifiedTypeNameHistroy>
