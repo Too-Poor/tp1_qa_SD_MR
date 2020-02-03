@@ -1,0 +1,151 @@
+/**
+ * Auteurs : Salif et Soti, Groupe : 02
+ * Fichier : TraiterSudokus.java
+ * Cours   : 420-3A6-MO (TP5, Expressions arithmétiques et Sudoku)
+ * Date    : 6 novembre 2019
+ */
+
+// Packages.
+
+import java.io.*;
+
+import outilsjava.*;
+
+/**
+ * La classe TraiterSudokus permet de créer un objet Sudoku et d'afficher la solution du sudoku. Les données de la
+ * grille de sudoku proviennent d'un fichier texte.
+ */
+
+public class TraiterSudokus implements OutilsConstantes {
+
+	/**
+	 * Le constructeur permet de traiter des sudokus tant que l'utilisateur le désire.
+	 */
+
+	public TraiterSudokus() {
+		
+		// Constante du constructeur.
+
+		final String QUEST_AUTRE_SUDOKU = "\nDésirez-vous traiter un autre fichier de sudoku (O ou N) ? ";
+
+		// Code du constructeur.
+
+		char confirmation = '\0';
+
+		do {
+			gererSudoku();
+
+			confirmation = OutilsLecture.lireOuiNon( QUEST_AUTRE_SUDOKU );
+
+		} while ( confirmation == OUI );
+
+	}
+
+	/**
+	 * Méthode qui permet de créer un objet Sudoku et d'afficher la solution du sudoku. Les données de la grille de
+	 * sudoku proviennent d'un fichier texte.
+	 */
+
+	private void gererSudoku() {
+
+		// Constantes de la méthode.
+
+		final String QUEST_NOM_FICHIER = "\nEntrez le nom du fichier contenant une grille de sudoku à résoudre : ";
+
+		final String ERREUR_FICHIER = "\nImpossible de résoudre une grille de sudoku, "
+				+ "car il y a un problème avec le fichier.";
+
+		final String MESS_VIDE = "\nIl n'y a aucune grille de sudoku à résoudre.";
+
+		// Code de la méthode.
+
+		String nomFichier;  // Nom physique du fichier texte.
+		BufferedReader fic; // Nom logique du fichier texte.
+
+		nomFichier = OutilsFichier.lireNomFichier( QUEST_NOM_FICHIER );
+
+		fic = OutilsFichier.ouvrirFicTexteLecture( nomFichier );
+
+		if ( fic == null ) {
+
+			System.out.println( ERREUR_FICHIER );
+
+		} else {
+
+			//TODO
+			int[][] grille;
+			
+			if (  ) {
+				
+			} else {
+
+			}
+			
+		}
+	}
+
+	/**
+	 * Méthode qui permet de lire les données de la grille de sudoku qui proviennent d'un fichier texte. Elle permet de
+	 * créer et de retourner le tableau qui contiendra la grille.
+	 * 
+	 * @param fic
+	 *            Le nom logique du fichier texte.
+	 * @param nomFichier
+	 *            Le nom physique du fichier texte.
+	 * 
+	 * @return La grille de sudoku ou null si le fichier est vide.
+	 */
+
+	private int[][] lireGrilleSudoku( BufferedReader fic, String nomFichier ) {
+
+		int[][] grille = null;
+
+		String ligne;
+		int dimGrille;
+
+		try {
+			// On commence par lire la première ligne du fichier.
+
+			ligne = fic.readLine();
+
+			if ( ligne != null ) {
+
+				// Création de la grille avec les infos de la première ligne.
+
+				dimGrille = ligne.length();
+
+				grille = new int[dimGrille][dimGrille];
+
+				char[] tabChiffre;
+				int li = 0;
+
+				do {
+					// Remplir une ligne de la grille.
+					// Chaque caractère (chiffre) de la chaîne est convertit en nb. entier.
+
+					tabChiffre = ligne.toCharArray();
+
+					for ( int i = 0; i < tabChiffre.length; ++i ) {
+
+						grille[li][i] = Character.getNumericValue( tabChiffre[i] );
+					}
+
+					// On passe à la ligne suivante.
+
+					++li;
+					ligne = fic.readLine();
+
+				} while ( ligne != null );
+			}
+
+			OutilsFichier.fermerFicTexteLecture( fic, nomFichier );
+		}
+
+		catch ( IOException e ) {
+			System.out.println(
+					"\nUne erreur de lecture est survenue avec le fichier de sudoku suivant : " + nomFichier );
+		}
+
+		return grille;
+	}
+}

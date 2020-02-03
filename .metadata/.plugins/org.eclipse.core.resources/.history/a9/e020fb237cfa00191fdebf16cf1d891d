@@ -1,0 +1,137 @@
+/**
+ * Auteurs : Salif et Soti, Groupe : 02
+ * Fichier : TraiterExpressions.java
+ * Cours   : 420-3A6-MO (TP5, Expressions arithmétiques et Sudoku)
+ * Date    : 6 novembre 2019
+ */
+
+// Packages.
+
+import java.io.*;
+import java.util.*;
+
+import outilsjava.*;
+
+/**
+ * La classe TraiterExpressions permet de créer une liste chaînée contenant des objets de type ExpressionArithmetique.
+ * Les données proviennent d'un fichier texte. Elle permet également d'afficher tous les objets de la liste.
+ * 
+ * Cette classe implémente l'interface OutilsConstantes.
+ */
+
+public class TraiterExpressions implements OutilsConstantes {
+
+	/**
+	 * Le constructeur permet de traiter des expressions arithmétiques tant que l'utilisateur le désire.
+	 */
+
+	public TraiterExpressions() {
+		// Constante du constructeur.
+
+		final String QUEST_AUTRE_EXPRESSION = "\nDésirez-vous traiter un autre fichier "
+				+ "d'expressions arithmétiques (O ou N) ? ";
+
+		// Code du constructeur.
+
+		char confirmation = '\0';
+
+		do {
+			creerAfficherListeExpressions();
+
+			confirmation = OutilsLecture.lireOuiNon( QUEST_AUTRE_EXPRESSION );
+
+		} while ( confirmation == OUI );
+	}
+
+	/**
+	 * Méthode qui permet de créer une liste chaînée contenant plusieurs objets de type ExpressionArithmetique. Les
+	 * données proviennent d'un fichier texte. La méthode permet également d'exécuter la méthode qui affiche les objets
+	 * de la liste.
+	 */
+
+	private void creerAfficherListeExpressions() {
+		
+		// Constantes de la méthode.
+
+		final String QUEST_NOM_FICHIER = "\nEntrez le nom du fichier contenant des expressions arithmétiques"
+				+ " à évaluer : ";
+
+		final String ERREUR_FICHIER = "\nImpossible d'évaluer des expressions arithmétiques, "
+				+ "car il y a un problème avec le fichier.";
+
+		// Code de la méthode.
+
+		String nomFichier;  // Nom physique du fichier texte.
+		BufferedReader fic; // Nom logique du fichier texte.
+
+		nomFichier = OutilsFichier.lireNomFichier( QUEST_NOM_FICHIER );
+
+		fic = OutilsFichier.ouvrirFicTexteLecture( nomFichier );
+
+		if ( fic == null ) {
+
+			System.out.println( ERREUR_FICHIER );
+
+		} else {
+			
+			LinkedList<ExpressionArithmetique> listeExp = new LinkedList<ExpressionArithmetique>();
+			
+			ExpressionArithmetique.initialiserPrioriteOperateurs();
+			
+			try {
+				
+				String expression;
+				
+				while ( ( expression = fic.readLine() ) != null ) {
+					
+					ExpressionArithmetique expAri = new ExpressionArithmetique( expression );
+					listeExp.add( expAri );
+					
+				}
+
+				OutilsFichier.fermerFicTexteLecture( fic, nomFichier );
+				afficherListeExpressions( listeExp );
+				
+			}
+
+			catch ( IOException e ) {
+				System.out.println( "\nUne erreur de lecture est survenue avec le fichier "
+						+ "des expressions arithmétiques suivant : " + nomFichier );
+			}
+		}
+	}
+
+	/**
+	 * Méthode qui permet d'afficher tous les objets de type ExpressionArithmetique qui se trouvent dans la liste
+	 * chaînée reçue en paramètre.
+	 * 
+	 * @param listeExpressions
+	 *            La liste chaînée des expressions arithmétiques.
+	 */
+
+	private void afficherListeExpressions( LinkedList<ExpressionArithmetique> listeExpressions ) {
+
+		// Constantes de la méthode.
+
+		final String MESS_VIDE = "\nIl n'y a aucune expression arithmétique à évaluer.";
+
+		final String TITRE = "\nVoici la liste des expressions arithmétiques.";
+
+		// Code de la méthode.
+
+		if ( listeExpressions.isEmpty() ) {
+			System.out.println( MESS_VIDE );
+		} else {
+			System.out.println( TITRE );
+			
+			for ( ExpressionArithmetique expressionArithmetique : listeExpressions ) {
+				
+				expressionArithmetique.afficherExpression();
+				OutilsLecture.lireEntree( "\n" + QUEST_CONTINUER );			
+			}
+			
+			System.out.println( "\nIl y a " + listeExpressions.size() + "expression(s) arithmétique(s) dans la liste." );
+		}
+		
+	}
+}
