@@ -20,7 +20,7 @@ public class CV {
 
 	}
 
-	public void affiche() {
+	private void affiche() {
 		String listeCompetences = "";
 
 		for ( int i = 0; i < this.competences.length - 1; i++ ) {
@@ -50,5 +50,5 @@ public class CV {
 		cvSalif.affiche();
 		cvMarwane.affiche();
 	}
-
+	
 }
