@@ -1,15 +1,26 @@
 
 public class Plat {
-	
+
 	private double prix;
-	
-	/*Retourne le nom*/
-	public double getPrix(){
+	private String nomPlat;
+
+	/* Retourne le Prix */
+	public double getPrix() {
 		return this.prix;
 	}
-	
-	/*Change le nom par le nom recu*/
-	public void setPrix(double prix){
+
+	/* Change le prix par le prix recu */
+	public void setPrix(double prix) {
 		this.prix = prix;
+	}
+
+	/* Retourne le nom du plat */
+	public String getNomPlat() {
+		return this.nomPlat;
+	}
+
+	/* Change le nom par le nom du plat recu */
+	public void setNomPlats(String nomPlat) {
+		this.nomPlat = nomPlat;
 	}
 }
